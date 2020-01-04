@@ -17,11 +17,18 @@ test('does it make a bundle?!', function (t) {
 });
 
 test('wildcards', function (t) {
-    spundle(path.resolve(__dirname, 'test-fixtures'), '*', '*', function (err, result) {
+    spundle(path.resolve(__dirname, 'test-fixtures'), '{US,AR}', '*', function (err, result) {
         t.error(err);
         t.ok(result);
         t.ok(result['en-US']);
         t.ok(result['es-AR']);
+        t.end();
+    });
+});
+
+test('parse error', function (t) {
+    spundle(path.resolve(__dirname, 'test-fixtures'), 'XX', 'xx', function (err, result) {
+        t.ok(err);
         t.end();
     });
 });

@@ -14,10 +14,10 @@ module.exports = function (base, country, language, callback) {
     glob(path.resolve(base, path.join(country, language)), iferr(callback, function (files) {
         var out = {};
         async.eachSeries(files, function (ent, next) {
-            findAllBundlesFromRoot(ent, function (err, o) {
+            findAllBundlesFromRoot(ent, iferr(next, function (o) {
                 out[localeFromPath(base, ent)] = o;
                 next();
-            });
+            }));
         }, iferr(callback, function () {
             callback(null, out);
         }));
